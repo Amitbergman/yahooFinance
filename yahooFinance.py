@@ -1,4 +1,7 @@
 import yfinance as yf
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
 msft = yf.Ticker("MSFT")
 ibm = yf.Ticker("IBM")
 
@@ -21,12 +24,20 @@ password = "Beni1234"
 
 # Create a secure SSL context
 context = ssl.create_default_context()
-message = f"The prices of msft stock today was: {msft_price}.\n The price of IBM was: {ibm_price}"
-print(message)
+text = f"The prices of msft stock today was: {msft_price}.\n The price of IBM was: {ibm_price}"
+
+message = MIMEMultipart("alternative")
+message["Subject"] = "Report for Amit"
+message["From"] = "123"
+message["To"] = "receiver_email"
+
+part1 = MIMEText(text, "plain")
+message.attach(part1)
+
 with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
     server.login("benbenelieli123beni@gmail.com", password)
     # TODO: Send email here
-    server.sendmail("benbenelieli123beni@gmail.com", "amitbergman@gmail.com", message)
-
+    server.sendmail("benbenelieli123beni@gmail.com", "amitbergman@gmail.com", message.as_string())
+    print(message.as_string())
     print("cool!")
     
