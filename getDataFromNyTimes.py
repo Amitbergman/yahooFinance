@@ -1,6 +1,8 @@
 import requests
+import keys
+
 def getFirstArticle(year):
-    my_key = "qIJnp0lno0aUTYCA9uaHcNhAhK4oGmjY"
+    my_key = keys.keys['nytimes']
 
     url = f"https://api.nytimes.com/svc/archive/v1/{year}/1.json?api-key="+my_key
 

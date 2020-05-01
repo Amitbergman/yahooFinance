@@ -4,6 +4,7 @@ from email.mime.text import MIMEText
 import smtplib, ssl
 from openpyxl import load_workbook
 from datetime import datetime, date
+import keys
 
 def mainFunction():
     (msft,ibm) = createTickers("MSFT", "IBM")
@@ -46,7 +47,7 @@ def sendEmailWithPrices(prices_array):
 
     server = smtplib.SMTP('smtp.gmail.com', 587)
     port = 465  # For SSL
-    password = "Beni1234"
+    password = keys.keys['yahoo']
 
 # Create a secure SSL context
     context = ssl.create_default_context()
@@ -55,15 +56,15 @@ def sendEmailWithPrices(prices_array):
     message = MIMEMultipart("alternative")
     message["Subject"] = "Report for Amit"
     message["From"] = "Amit"
-    message["To"] = "amitbergman@gmail.com"
+    message["To"] = keys.keys['myMail']
 
     part1 = MIMEText(text, "plain")
     message.attach(part1)
 
     with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
-        server.login("benbenelieli123beni@gmail.com", password)
+        server.login(keys.keys['botMail'], password)
         # TODO: Send email here
-        server.sendmail("benbenelieli123beni@gmail.com", "amitbergman@gmail.com", message.as_string())
+        server.sendmail(keys.keys['botMail'], keys.keys['myMail'], message.as_string())
         print(message.as_string())
         print("cool! Email sent!")
 
