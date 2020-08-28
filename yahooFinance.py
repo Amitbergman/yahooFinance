@@ -68,14 +68,14 @@ def sendEmailAlert(text, prices):
 
     server = smtplib.SMTP('smtp.gmail.com', 587)
     port = 465  # For SSL
-    password = keys.keys['yahooPassword']
+    password = keys.keys['password']
     pricesAsStrings = [str(price) for price in prices]
 # Create a secure SSL context
     context = ssl.create_default_context()
 
     message = MIMEMultipart("alternative")
     message["Subject"] = text
-    message["From"] = "Amit"
+    message["From"] = "BOT"
     message["To"] = keys.keys['myMail']
 
     part1 = MIMEText(', '.join(pricesAsStrings), "plain")
